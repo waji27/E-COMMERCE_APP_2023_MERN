@@ -1,6 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/auth";
 
 const Header = () => {
+  const [auth, setAuth] = useAuth();
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
+  };
+
+  const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    toast.success("Logout Successfully");
+  };
   return (
     <>
       <nav className="bg-white dark:bg-gray-800 antialiased">
@@ -8,33 +26,32 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-8">
               <div className="shrink-0">
-                <a href="#" title className>
-                  <img
+                {/* <img
                     className="block w-auto h-8 dark:hidden"
                     src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full.svg"
                     alt
-                  />
-                  <img
+                  /> */}
+                <Link to="/" className="text-orange-600">
+                  E-Commerce
+                </Link>
+                {/* <img
                     className="hidden w-auto h-8 dark:block"
                     src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
                     alt
-                  />
-                </a>
+                  /> */}
               </div>
               <ul className="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
                 <li>
-                  <a
-                    href="#"
-                    title
+                  <Link
+                    to="/"
                     className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
                   >
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="shrink-0">
                   <a
                     href="#"
-                    title
                     className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
                   >
                     Best Sellers
@@ -43,7 +60,6 @@ const Header = () => {
                 <li className="shrink-0">
                   <a
                     href="#"
-                    title
                     className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
                   >
                     Gift Ideas
@@ -52,7 +68,6 @@ const Header = () => {
                 <li className="shrink-0">
                   <a
                     href="#"
-                    title
                     className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
                   >
                     Today's Deals
@@ -61,7 +76,6 @@ const Header = () => {
                 <li className="shrink-0">
                   <a
                     href="#"
-                    title
                     className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
                   >
                     Sell
@@ -70,7 +84,8 @@ const Header = () => {
               </ul>
             </div>
             <div className="flex items-center lg:space-x-2">
-              <button
+              <Link
+                to="/cart"
                 id="myCartDropdownButton1"
                 data-dropdown-toggle="myCartDropdown1"
                 type="button"
@@ -95,269 +110,9 @@ const Header = () => {
                   />
                 </svg>
                 <span className="hidden sm:flex">My Cart</span>
-                <svg
-                  className="hidden sm:flex w-4 h-4 text-gray-900 dark:text-white ms-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m19 9-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <div
-                id="myCartDropdown1"
-                className="hidden z-10 mx-auto max-w-sm space-y-4 overflow-hidden rounded-lg bg-white p-4 antialiased shadow-lg dark:bg-gray-800"
-              >
-                <div className="grid grid-cols-2">
-                  <div>
-                    <a
-                      href="#"
-                      className="truncate text-sm font-semibold leading-none text-gray-900 dark:text-white hover:underline"
-                    >
-                      Apple iPhone 15
-                    </a>
-                    <p className="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">
-                      $599
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-end gap-6">
-                    <p className="text-sm font-normal leading-none text-gray-500 dark:text-gray-400">
-                      Qty: 1
-                    </p>
-                    <button
-                      data-tooltip-target="tooltipRemoveItem1a"
-                      type="button"
-                      className="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600"
-                    >
-                      <span className="sr-only"> Remove </span>
-                      <svg
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm7.7-3.7a1 1 0 0 0-1.4 1.4l2.3 2.3-2.3 2.3a1 1 0 1 0 1.4 1.4l2.3-2.3 2.3 2.3a1 1 0 0 0 1.4-1.4L13.4 12l2.3-2.3a1 1 0 0 0-1.4-1.4L12 10.6 9.7 8.3Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <div
-                      id="tooltipRemoveItem1a"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Remove item
-                      <div className="tooltip-arrow" data-popper-arrow />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div>
-                    <a
-                      href="#"
-                      className="truncate text-sm font-semibold leading-none text-gray-900 dark:text-white hover:underline"
-                    >
-                      Apple iPad Air
-                    </a>
-                    <p className="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">
-                      $499
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-end gap-6">
-                    <p className="text-sm font-normal leading-none text-gray-500 dark:text-gray-400">
-                      Qty: 1
-                    </p>
-                    <button
-                      data-tooltip-target="tooltipRemoveItem2a"
-                      type="button"
-                      className="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600"
-                    >
-                      <span className="sr-only"> Remove </span>
-                      <svg
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm7.7-3.7a1 1 0 0 0-1.4 1.4l2.3 2.3-2.3 2.3a1 1 0 1 0 1.4 1.4l2.3-2.3 2.3 2.3a1 1 0 0 0 1.4-1.4L13.4 12l2.3-2.3a1 1 0 0 0-1.4-1.4L12 10.6 9.7 8.3Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <div
-                      id="tooltipRemoveItem2a"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Remove item
-                      <div className="tooltip-arrow" data-popper-arrow />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div>
-                    <a
-                      href="#"
-                      className="truncate text-sm font-semibold leading-none text-gray-900 dark:text-white hover:underline"
-                    >
-                      Apple Watch SE
-                    </a>
-                    <p className="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">
-                      $598
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-end gap-6">
-                    <p className="text-sm font-normal leading-none text-gray-500 dark:text-gray-400">
-                      Qty: 2
-                    </p>
-                    <button
-                      data-tooltip-target="tooltipRemoveItem3b"
-                      type="button"
-                      className="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600"
-                    >
-                      <span className="sr-only"> Remove </span>
-                      <svg
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm7.7-3.7a1 1 0 0 0-1.4 1.4l2.3 2.3-2.3 2.3a1 1 0 1 0 1.4 1.4l2.3-2.3 2.3 2.3a1 1 0 0 0 1.4-1.4L13.4 12l2.3-2.3a1 1 0 0 0-1.4-1.4L12 10.6 9.7 8.3Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <div
-                      id="tooltipRemoveItem3b"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Remove item
-                      <div className="tooltip-arrow" data-popper-arrow />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div>
-                    <a
-                      href="#"
-                      className="truncate text-sm font-semibold leading-none text-gray-900 dark:text-white hover:underline"
-                    >
-                      Sony Playstation 5
-                    </a>
-                    <p className="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">
-                      $799
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-end gap-6">
-                    <p className="text-sm font-normal leading-none text-gray-500 dark:text-gray-400">
-                      Qty: 1
-                    </p>
-                    <button
-                      data-tooltip-target="tooltipRemoveItem4b"
-                      type="button"
-                      className="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600"
-                    >
-                      <span className="sr-only"> Remove </span>
-                      <svg
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm7.7-3.7a1 1 0 0 0-1.4 1.4l2.3 2.3-2.3 2.3a1 1 0 1 0 1.4 1.4l2.3-2.3 2.3 2.3a1 1 0 0 0 1.4-1.4L13.4 12l2.3-2.3a1 1 0 0 0-1.4-1.4L12 10.6 9.7 8.3Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <div
-                      id="tooltipRemoveItem4b"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Remove item
-                      <div className="tooltip-arrow" data-popper-arrow />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div>
-                    <a
-                      href="#"
-                      className="truncate text-sm font-semibold leading-none text-gray-900 dark:text-white hover:underline"
-                    >
-                      Apple iMac 20"
-                    </a>
-                    <p className="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">
-                      $8,997
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-end gap-6">
-                    <p className="text-sm font-normal leading-none text-gray-500 dark:text-gray-400">
-                      Qty: 3
-                    </p>
-                    <button
-                      data-tooltip-target="tooltipRemoveItem5b"
-                      type="button"
-                      className="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600"
-                    >
-                      <span className="sr-only"> Remove </span>
-                      <svg
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm7.7-3.7a1 1 0 0 0-1.4 1.4l2.3 2.3-2.3 2.3a1 1 0 1 0 1.4 1.4l2.3-2.3 2.3 2.3a1 1 0 0 0 1.4-1.4L13.4 12l2.3-2.3a1 1 0 0 0-1.4-1.4L12 10.6 9.7 8.3Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <div
-                      id="tooltipRemoveItem5b"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Remove item
-                      <div className="tooltip-arrow" data-popper-arrow />
-                    </div>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  title
-                  className="mb-2 me-2 inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  role="button"
-                >
-                  {" "}
-                  Proceed to Checkout{" "}
-                </a>
-              </div>
+              </Link>
               <button
+                onClick={toggleUserMenu}
                 id="userDropdownButton1"
                 data-dropdown-toggle="userDropdown1"
                 type="button"
@@ -398,24 +153,52 @@ const Header = () => {
                 </svg>
               </button>
               <div
-                id="userDropdown1"
-                className="hidden z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700"
+                // id="userDropdown1"
+                className={`${
+                  isUserMenuOpen ? "absolute" : "hidden"
+                } z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700 mt-40`}
               >
                 <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
-                  <li>
+                  {!auth?.user ? (
+                    <>
+                      <li>
+                        <Link
+                          to="/login"
+                          className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                        >
+                          {" "}
+                          Log In{" "}
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <button
+                          onClick={handleLogout}
+                          className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                        >
+                          {" "}
+                          Log out{" "}
+                        </button>
+                      </li>
+                    </>
+                  )}
+
+                  {/* <li>
                     <a
                       href="#"
-                      title
+                      
                       className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       {" "}
                       My Account{" "}
                     </a>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <a
                       href="#"
-                      title
+                      
                       className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       {" "}
@@ -425,7 +208,7 @@ const Header = () => {
                   <li>
                     <a
                       href="#"
-                      title
+                      
                       className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       {" "}
@@ -435,17 +218,17 @@ const Header = () => {
                   <li>
                     <a
                       href="#"
-                      title
+                      
                       className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       {" "}
                       Favourites{" "}
                     </a>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <a
                       href="#"
-                      title
+                      
                       className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       {" "}
@@ -455,24 +238,33 @@ const Header = () => {
                   <li>
                     <a
                       href="#"
-                      title
+                      
                       className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       {" "}
                       Billing Data{" "}
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
                 <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
-                  <a
-                    href="#"
-                    title
+                  <Link
+                    to="/signup"
                     className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                   >
                     {" "}
-                    Sign Out{" "}
-                  </a>
+                    Sign Up{" "}
+                  </Link>
                 </div>
+                {/* <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <a
+                    href="#"
+                    
+                    className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                  >
+                    {" "}
+                    Log Out{" "}
+                  </a>
+                </div> */}
               </div>
               <button
                 type="button"
