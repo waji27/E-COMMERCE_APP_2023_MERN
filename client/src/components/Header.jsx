@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/auth";
+import { toast } from "react-hot-toast";
+import { Badge } from "antd";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
-
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isnavMenuOpen, setIsNavMenuOpen] = useState(false);
+
+  // function to toggle user menu
   const toggleUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
   };
+  // function to toggle nav menu
+  const toggleNavMenu = () => {
+    setIsNavMenuOpen(!isnavMenuOpen);
+  };
 
+  // function to handle logout functionality
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -50,12 +59,14 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="shrink-0">
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => {
+                      toast.success("Page will be added soon");
+                    }}
                     className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
                   >
-                    Best Sellers
-                  </a>
+                    Best Products
+                  </button>
                 </li>
                 <li className="shrink-0">
                   <a
@@ -246,15 +257,33 @@ const Header = () => {
                     </a>
                   </li> */}
                 </ul>
-                <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
-                  <Link
-                    to="/signup"
-                    className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                  >
+                {auth?.user ? (
+                  <>
+                    <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <Link
+                        to="/dashboard"
+                        className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >
+                        {" "}
+                        Dashboard{" "}
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
                     {" "}
-                    Sign Up{" "}
-                  </Link>
-                </div>
+                    <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <Link
+                        to="/signup"
+                        className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >
+                        {" "}
+                        Sign Up{" "}
+                      </Link>
+                    </div>
+                  </>
+                )}
+
                 {/* <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
                   <a
                     href="#"
@@ -267,6 +296,7 @@ const Header = () => {
                 </div> */}
               </div>
               <button
+                onClick={toggleNavMenu}
                 type="button"
                 data-collapse-toggle="ecommerce-navbar-menu-1"
                 aria-controls="ecommerce-navbar-menu-1"
@@ -295,7 +325,11 @@ const Header = () => {
           </div>
           <div
             id="ecommerce-navbar-menu-1"
-            className="bg-gray-50 dark:bg-gray-700 dark:border-gray-600 border border-gray-200 rounded-lg py-3 hidden px-4 mt-4"
+            className={`${
+              isnavMenuOpen
+                ? "bg-gray-50 dark:bg-gray-700 dark:border-gray-600 border border-gray-200 rounded-lg py-3 px-4 mt-4"
+                : "hidden"
+            } `}
           >
             <ul className="text-gray-900 dark:text-white text-sm font-medium dark:text-white space-y-3">
               <li>
