@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import { toast } from "react-hot-toast";
 import { Badge } from "antd";
+import { useCart } from "../context/cart";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isnavMenuOpen, setIsNavMenuOpen] = useState(false);
+  const [cart] = useCart();
 
   // function to toggle user menu
   const toggleUserMenu = () => {
@@ -94,34 +96,39 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            <div className="flex items-center lg:space-x-2">
-              <Link
-                to="/cart"
-                id="myCartDropdownButton1"
-                data-dropdown-toggle="myCartDropdown1"
-                type="button"
-                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
-              >
-                <span className="sr-only">Cart</span>
-                <svg
-                  className="w-5 h-5 lg:me-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  fill="none"
-                  viewBox="0 0 24 24"
+            <div className="flex items-center lg:space-x-2 ">
+              <Badge count={cart?.length} showZero offset={[-8, 2]}>
+                <Link
+                  to="/cart"
+                  id="myCartDropdownButton1"
+                  data-dropdown-toggle="myCartDropdown1"
+                  type="button"
+                  className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white mx-2"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
-                  />
-                </svg>
-                <span className="hidden sm:flex">My Cart</span>
-              </Link>
+                  {/* <Badge count={cart?.length} showZero offset={[24, -16]}>
+                </Badge> */}
+                  <span className="sr-only">Cart</span>
+                  <svg
+                    className="w-5 h-5 lg:me-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={24}
+                    height={24}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+                    />
+                  </svg>
+                  <span className="hidden sm:flex"> My Cart</span>
+                </Link>
+              </Badge>
+
               <button
                 onClick={toggleUserMenu}
                 id="userDropdownButton1"
@@ -261,7 +268,9 @@ const Header = () => {
                   <>
                     <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
                       <Link
-                        to="/dashboard"
+                        to={`/dashboard/${
+                          auth?.user?.role === 1 ? "admin" : "user"
+                        }`}
                         className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                       >
                         {" "}

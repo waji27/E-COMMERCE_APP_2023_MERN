@@ -4,6 +4,12 @@ import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import Cart from "./pages/Cart";
+import Dashboard from "./pages/UserPages/Dashboard";
+import PrivateRoute from "./Routes/UserRoute";
+import AdminRoute from "./Routes/AdminRoute";
+import AdminDashboard from "./pages/AdminPages/AdminDashboard";
+import Profile from "./pages/UserPages/Profile";
+import Orders from "./pages/UserPages/Orders";
 
 function App() {
   return (
@@ -14,6 +20,14 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/dashboard" element={<PrivateRoute />}>
+          <Route path="user" element={<Dashboard />} />
+          <Route path="user/profile" element={<Profile />} />
+          <Route path="user/orders" element={<Orders />} />
+        </Route>
+        <Route path="/dashboard" element={<AdminRoute />}>
+          <Route path="admin" element={<AdminDashboard />} />
+        </Route>
       </Routes>
     </>
   );
