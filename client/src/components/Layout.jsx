@@ -52,9 +52,8 @@ const Layout = ({ children }) => {
         </button>
       </div>
       <Toaster />
-
       <Header />
-      {children}
+      <div className="bg-white dark:bg-gray-900 min-h-screen">{children}</div>
       <Footer />
     </>
   );

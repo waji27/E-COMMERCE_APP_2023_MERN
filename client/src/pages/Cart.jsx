@@ -214,7 +214,7 @@ const Cart = () => {
               </div>
 
               {/*......................... suggesting more products section .................... */}
-              <div className="hidden xl:mt-8 xl:block">
+              {/* <div className="hidden xl:mt-8 xl:block">
                 <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
                   People also bought
                 </h3>
@@ -484,7 +484,7 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* order summary section  */}
@@ -572,7 +572,7 @@ const Cart = () => {
                   </a>
                 </div>
               </div>
-              <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
+              {/* <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
                 <form className="space-y-4">
                   <div>
                     <label
@@ -597,7 +597,7 @@ const Cart = () => {
                     Apply Code
                   </button>
                 </form>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
