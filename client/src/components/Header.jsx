@@ -37,19 +37,9 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-8">
               <div className="shrink-0">
-                {/* <img
-                    className="block w-auto h-8 dark:hidden"
-                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full.svg"
-                    alt
-                  /> */}
                 <Link to="/" className="text-orange-600">
-                  E-Commerce
+                  E-Commerce Store
                 </Link>
-                {/* <img
-                    className="hidden w-auto h-8 dark:block"
-                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
-                    alt
-                  /> */}
               </div>
               <ul className="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
                 <li>
@@ -71,28 +61,14 @@ const Header = () => {
                   </button>
                 </li>
                 <li className="shrink-0">
-                  <a
-                    href="#"
-                    className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
-                  >
-                    Gift Ideas
-                  </a>
-                </li>
-                <li className="shrink-0">
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => {
+                      toast.success("Page will be added soon");
+                    }}
                     className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
                   >
                     Today's Deals
-                  </a>
-                </li>
-                <li className="shrink-0">
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
-                  >
-                    Sell
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -105,8 +81,6 @@ const Header = () => {
                   type="button"
                   className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white mx-2"
                 >
-                  {/* <Badge count={cart?.length} showZero offset={[24, -16]}>
-                </Badge> */}
                   <span className="sr-only">Cart</span>
                   <svg
                     className="w-5 h-5 lg:me-1"
@@ -170,8 +144,8 @@ const Header = () => {
                   />
                 </svg>
               </button>
+
               <div
-                // id="userDropdown1"
                 className={`${
                   isUserMenuOpen ? "absolute" : "hidden"
                 } z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700 mt-40`}
@@ -202,67 +176,6 @@ const Header = () => {
                       </li>
                     </>
                   )}
-
-                  {/* <li>
-                    <a
-                      href="#"
-                      
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {" "}
-                      My Account{" "}
-                    </a>
-                  </li> */}
-                  {/* <li>
-                    <a
-                      href="#"
-                      
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {" "}
-                      My Orders{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {" "}
-                      Settings{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {" "}
-                      Favourites{" "}
-                    </a>
-                  </li> */}
-                  {/* <li>
-                    <a
-                      href="#"
-                      
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {" "}
-                      Delivery Addresses{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      
-                      className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      {" "}
-                      Billing Data{" "}
-                    </a>
-                  </li> */}
                 </ul>
                 {auth?.user ? (
                   <>
@@ -304,6 +217,7 @@ const Header = () => {
                   </a>
                 </div> */}
               </div>
+
               <button
                 onClick={toggleNavMenu}
                 type="button"
