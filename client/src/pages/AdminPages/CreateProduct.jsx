@@ -48,15 +48,15 @@ const CreateProduct = () => {
       productData.append("quantity", quantity);
       productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.post(
+      const { data } = await axios.post(
         "http://localhost:3030/api/v1/product/create-product",
         productData
       );
       if (data?.success) {
-        toast.error(data?.message);
-      } else {
-        toast.success("Product Created Successfully");
+        toast.success(data?.message);
         navigate("/dashboard/admin/products");
+      } else {
+        toast.error(data?.message);
       }
     } catch (error) {
       console.log(error);
@@ -66,12 +66,10 @@ const CreateProduct = () => {
 
   return (
     <Layout title={"Dashboard - Create Product"}>
-      <div className="container-fluid m-3 p-3 dashboard">
+      {/* <div className="container-fluid dashboard">
         <div className="row">
-          <div className="col-md-3">
-            <AdminMenu />
-          </div>
-          {/* <div className="col-md-9">
+          <div className="col-md-3"></div>
+          <div className="col-md-9">
             <h1>Create Product</h1>
             <div className="m-1 w-75">
               <Select
@@ -172,16 +170,18 @@ const CreateProduct = () => {
                 </button>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
-      </div>
+      </div> */}
 
+      <AdminMenu />
       <section className="bg-white dark:bg-gray-900">
         <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
           <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
             Add a new product
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+            {/* picture  */}
             <div className="sm:col-span-2">
               <div className="flex items-center justify-center w-full">
                 <label
@@ -209,17 +209,16 @@ const CreateProduct = () => {
                         <img
                           src={URL.createObjectURL(photo)}
                           alt="product_photo"
-                          height={"200px"}
-                          className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                          className="w-60 h-60 mb-4 text-gray-500 dark:text-gray-400 "
                         />
                       </div>
                     )}
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      {photo ? photo.name : "Click to upload or drag and drop"}
+                      {photo
+                        ? photo.name
+                        : "Click to upload or drag and drop(MAX. 800x400px)"}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      SVG, PNG, JPG or GIF (MAX. 800x400px)
-                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400"></p>
                   </div>
                   <input
                     id="dropzone-file"
@@ -231,6 +230,7 @@ const CreateProduct = () => {
               </div>
             </div>
 
+            {/* name  */}
             <div className="sm:col-span-2">
               <label
                 htmlFor="name"
@@ -265,6 +265,8 @@ const CreateProduct = () => {
                   required
                 />
               </div> */}
+
+            {/* price  */}
             <div className="w-full">
               <label
                 htmlFor="price"
@@ -283,6 +285,8 @@ const CreateProduct = () => {
                 required
               />
             </div>
+
+            {/* categories */}
             <div>
               <label
                 htmlFor="category"
@@ -291,20 +295,20 @@ const CreateProduct = () => {
                 Category
               </label>
               <select
-                onChange={(value) => {
-                  setCategory(value);
-                }}
+                onChange={(e) => setCategory(e.target.value)}
                 id="category"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               >
-                <option selected>Select category</option>
+                <option value="Select Category">Select category</option>
                 {categories?.map((c) => (
-                  <option key={c._id} value={c._id}>
+                  <option value={c._id} key={c._id}>
                     {c.name}
                   </option>
                 ))}
               </select>
             </div>
+
+            {/* shipping  */}
             <div>
               <label
                 htmlFor="shipping"
@@ -313,9 +317,7 @@ const CreateProduct = () => {
                 Shipping
               </label>
               <select
-                onChange={(value) => {
-                  setShipping(value);
-                }}
+                onChange={(e) => setShipping(e.target.value)}
                 id="shipping"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               >
@@ -323,6 +325,8 @@ const CreateProduct = () => {
                 <option value="1">Yes</option>
               </select>
             </div>
+
+            {/* quantity  */}
             <div>
               <label
                 htmlFor="item-weight"
@@ -341,6 +345,8 @@ const CreateProduct = () => {
                 required
               />
             </div>
+
+            {/* description  */}
             <div className="sm:col-span-2">
               <label
                 htmlFor="description"
@@ -355,7 +361,6 @@ const CreateProduct = () => {
                 rows={8}
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Your description here"
-                defaultValue={""}
               />
             </div>
           </div>

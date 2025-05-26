@@ -32,7 +32,7 @@ const Products = () => {
         </div>
         <div className="col-md-9 ">
           {/* all products  */}
-          <div className="m-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products?.map((p) => (
               <Link
                 to={`/dashboard/admin/product/${p.slug}`}
@@ -135,6 +135,7 @@ const Products = () => {
                   >
                     {p.description.substring(0, 40)}...
                   </a>
+                  {/* rating  */}
                   <div className="mt-2 flex items-center gap-2">
                     <div className="flex items-center">
                       <svg
@@ -190,6 +191,7 @@ const Products = () => {
                       (455)
                     </p>
                   </div>
+                  {/* fast delivery and best price  */}
                   <ul className="mt-2 flex items-center gap-4">
                     <li className="flex items-center gap-2">
                       <svg
@@ -231,6 +233,7 @@ const Products = () => {
                       </p>
                     </li>
                   </ul>
+                  {/* add to cart  */}
                   <div className="mt-4 flex items-center justify-between gap-4">
                     <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
                       {p.price.toLocaleString("en-US", {

@@ -254,3 +254,23 @@ export const orderStatusController = async (req, res) => {
     });
   }
 };
+
+// get all users
+export const getAllUsersController = async (req, res) => {
+  try {
+    const allusers = await userModel.find({});
+    res.status(200).send({
+      success: true,
+      counTotal: allusers.length,
+      message: "All Users fetched successfully ",
+      allusers,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Erorr in getting users",
+      error: error.message,
+    });
+  }
+};
