@@ -3,8 +3,9 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title, description, keywords, author }) => {
   const [notification, setNotification] = useState(true);
   const closeNotification = () => {
     setNotification(false);
@@ -12,6 +13,13 @@ const Layout = ({ children }) => {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta name="description" content={description} />
+        <meta name="keywords" content={keywords} />
+        <meta name="author" content={author} />
+        <title>{title}</title>
+      </Helmet>
       <div
         id="banner"
         tabIndex="-1"
@@ -57,6 +65,13 @@ const Layout = ({ children }) => {
       <Footer />
     </>
   );
+};
+
+Layout.defaultProps = {
+  title: "Ecommerce app - shop now",
+  description: "mern stack project",
+  keywords: "mern,react,node,mongodb",
+  author: "Techinfoyt",
 };
 
 export default Layout;
