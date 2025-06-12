@@ -125,7 +125,7 @@ export const productPhotoController = async (req, res) => {
   }
 };
 
-//delete controller
+//delete Product controller
 export const deleteProductController = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.params.pid).select("-photo");

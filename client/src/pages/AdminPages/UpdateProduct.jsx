@@ -24,7 +24,7 @@ const UpdateProduct = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
+        `http://localhost:3030/api/v1/product/get-product/${params.slug}`
       );
       setName(data.product.name);
       setId(data.product._id);
@@ -93,11 +93,13 @@ const UpdateProduct = () => {
     try {
       let answer = window.prompt("Are You Sure want to delete this product ? ");
       if (!answer) return;
-      const { data } = await axios.delete(
+      const { response } = await axios.delete(
         `http://localhost:3030/api/v1/product/delete-product/${id}`
       );
-      toast.success("Product DEleted Succfully");
-      navigate("/dashboard/admin/products");
+      if (response.data.success) {
+        toast.success("Product DEleted Succfully");
+        navigate("/dashboard/admin/products");
+      }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -105,7 +107,7 @@ const UpdateProduct = () => {
   };
   return (
     <Layout title={"Dashboard - Create Product"}>
-      <div className="container-fluid m-3 p-3">
+      {/* <div className="container-fluid m-3 p-3">
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
@@ -155,9 +157,10 @@ const UpdateProduct = () => {
                 ) : (
                   <div className="text-center">
                     <img
-                      src={`/api/v1/product/product-photo/${id}`}
+                      src={`http://localhost:3030/api/v1/product/product-photo/${id}`}
                       alt="product_photo"
                       height={"200px"}
+                      width={"300px"}
                       className="img img-responsive"
                     />
                   </div>
@@ -229,7 +232,193 @@ const UpdateProduct = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      <section className="bg-white dark:bg-gray-900">
+        <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            Add a new product
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+            {/* picture  */}
+            <div className="sm:col-span-2">
+              <div className="flex items-center justify-center w-full">
+                <label
+                  htmlFor="dropzone-file"
+                  className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    {photo ? (
+                      <div className="text-center">
+                        <img
+                          src={URL.createObjectURL(photo)}
+                          alt="product_photo"
+                          className="w-40 h-40 mb-4 text-gray-500 dark:text-gray-400 "
+                        />
+                      </div>
+                    ) : (
+                      <div className="text-center">
+                        <img
+                          src={`http://localhost:3030/api/v1/product/product-photo/${id}`}
+                          alt="product_photo"
+                          height={"200px"}
+                          width={"300px"}
+                          className="img img-responsive"
+                        />
+                      </div>
+                    )}
+
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                      {photo
+                        ? photo.name
+                        : "Click to upload or drag and drop(MAX. 800x400px)"}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400"></p>
+                  </div>
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => setPhoto(e.target.files[0])}
+                  />
+                </label>
+              </div>
+            </div>
+
+            {/* name  */}
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="name"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Product Name
+              </label>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                name="name"
+                id="name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Type product name"
+                required
+              />
+            </div>
+
+            {/* price  */}
+            <div className="w-full">
+              <label
+                htmlFor="price"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Price
+              </label>
+              <input
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                type="number"
+                name="price"
+                id="price"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="$2999"
+                required
+              />
+            </div>
+
+            {/* categories */}
+            <div>
+              <label
+                htmlFor="category"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Category
+              </label>
+              <select
+                onChange={(e) => setCategory(e.target.value)}
+                id="category"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              >
+                <option value="Select Category">Select category</option>
+                {categories?.map((c) => (
+                  <option value={c._id} key={c._id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* shipping  */}
+            <div>
+              <label
+                htmlFor="shipping"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Shipping
+              </label>
+              <select
+                onChange={(e) => setShipping(e.target.value)}
+                id="shipping"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
+
+            {/* quantity  */}
+            <div>
+              <label
+                htmlFor="item-weight"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Quantity
+              </label>
+              <input
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                type="number"
+                name="item-weight"
+                id="item-weight"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder={12}
+                required
+              />
+            </div>
+
+            {/* description  */}
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="description"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Description
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                id="description"
+                rows={8}
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Your description here"
+              />
+            </div>
+          </div>
+          <button
+            onClick={handleUpdate}
+            type="submit"
+            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800 mx-1"
+          >
+            Update product
+          </button>
+          <button
+            onClick={handleDelete}
+            type="submit"
+            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800 mx-1"
+          >
+            Delete product
+          </button>
+        </div>
+      </section>
     </Layout>
   );
 };
