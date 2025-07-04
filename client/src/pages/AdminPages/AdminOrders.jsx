@@ -9,46 +9,46 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const AdminOrders = () => {
-  const [status, setStatus] = useState([
-    "Not Process",
-    "Processing",
-    "Shipped",
-    "deliverd",
-    "cancel",
-  ]);
-  const [changeStatus, setCHangeStatus] = useState("");
-  const [orders, setOrders] = useState([]);
-  const [auth, setAuth] = useAuth();
-  const getOrders = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/auth/all-orders");
-      setOrders(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const [status, setStatus] = useState([
+  //   "Not Process",
+  //   "Processing",
+  //   "Shipped",
+  //   "deliverd",
+  //   "cancel",
+  // ]);
+  // const [changeStatus, setCHangeStatus] = useState("");
+  // const [orders, setOrders] = useState([]);
+  // const [auth, setAuth] = useAuth();
+  // const getOrders = async () => {
+  //   try {
+  //     const { data } = await axios.get("/api/v1/auth/all-orders");
+  //     setOrders(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (auth?.token) getOrders();
-  }, [auth?.token]);
+  // useEffect(() => {
+  //   if (auth?.token) getOrders();
+  // }, [auth?.token]);
 
-  const handleChange = async (orderId, value) => {
-    try {
-      const { data } = await axios.put(`/api/v1/auth/order-status/${orderId}`, {
-        status: value,
-      });
-      getOrders();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleChange = async (orderId, value) => {
+  //   try {
+  //     const { data } = await axios.put(`/api/v1/auth/order-status/${orderId}`, {
+  //       status: value,
+  //     });
+  //     getOrders();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <Layout title={"All Orders Data"}>
       <div className="row dashboard">
         <div className="col-md-3">
           <AdminMenu />
         </div>
-        <div className="col-md-9">
+        {/* <div className="col-md-9">
           <h1 className="text-center">All Orders</h1>
           {orders?.map((o, i) => {
             return (
@@ -110,6 +110,45 @@ const AdminOrders = () => {
               </div>
             );
           })}
+        </div> */}
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-4 py-3">
+                  Order name
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Actions
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  {" "}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b dark:border-gray-700">
+                <th
+                  scope="row"
+                  className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  Product1
+                </th>
+                <td className="px-4 py-3 ">
+                  <button className="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    edit
+                  </button>
+                </td>
+                <td className="px-4 py-3">
+                  {" "}
+                  <button className="flex items-center justify-center text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-500 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-blue-800">
+                    delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </Layout>

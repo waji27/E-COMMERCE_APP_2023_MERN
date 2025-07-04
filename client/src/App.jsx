@@ -17,6 +17,7 @@ import UpdateProduct from "./pages/AdminPages/UpdateProduct";
 import Products from "./pages/AdminPages/Products";
 import Users from "./pages/AdminPages/ Users";
 import AdminOrders from "./pages/AdminPages/AdminOrders";
+import ViewProduct from "./pages/ViewProduct";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/viewproduct" element={<ViewProduct />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/search" element={<Search />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
